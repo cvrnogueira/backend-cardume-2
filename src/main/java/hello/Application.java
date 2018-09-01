@@ -1,7 +1,12 @@
 package hello;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.Arrays;
 
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -25,6 +30,22 @@ public class Application {
             Arrays.sort(beanNames);
             for (String beanName : beanNames) {
                 System.out.println(beanName);
+            }
+
+            try {
+
+                FileInputStream serviceAccount = new FileInputStream("serviceAccountKey.json");
+
+                FirebaseOptions options = new FirebaseOptions.Builder()
+                        .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+                        .setDatabaseUrl("https://cardume-2018.firebaseio.com/")
+                        .build();
+
+                FirebaseApp.initializeApp(options);
+
+            }catch (IOException e) {
+                System.out.println("Error");
+                //Log.error("error " + e);
             }
 
         };
