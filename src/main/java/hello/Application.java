@@ -18,6 +18,38 @@ public class Application {
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
+
+        try {
+
+
+            FileInputStream serviceAccount = new FileInputStream(massageWhitespace("serviceAccountKey.json"));
+
+
+
+            FirebaseOptions options = new FirebaseOptions.Builder()
+                    .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+                    .setDatabaseUrl("https://cardume-2018.firebaseio.com/")
+                    .build();
+
+            FirebaseApp.initializeApp(options);
+
+        }catch (IOException e) {
+            System.out.println("Error");
+            //Log.error("error " + e);
+        }
+
+    }
+
+    private static String massageWhitespace(String s) {
+        String newString = "";
+        for (Character c : s.toCharArray()) {
+            if ("00a0".equals(Integer.toHexString(c | 0x10000).substring(1))) {
+                newString += " ";
+            } else {
+                newString += c;
+            }
+        }
+        return newString;
     }
 
     @Bean
@@ -32,23 +64,10 @@ public class Application {
                 System.out.println(beanName);
             }
 
-            try {
-
-                FileInputStream serviceAccount = new FileInputStream("serviceAccountKey.json");
-
-                FirebaseOptions options = new FirebaseOptions.Builder()
-                        .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-                        .setDatabaseUrl("https://cardume-2018.firebaseio.com/")
-                        .build();
-
-                FirebaseApp.initializeApp(options);
-
-            }catch (IOException e) {
-                System.out.println("Error");
-                //Log.error("error " + e);
-            }
 
         };
+
     }
+
 
 }

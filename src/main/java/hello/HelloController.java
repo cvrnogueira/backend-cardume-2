@@ -3,19 +3,18 @@ package hello;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.CollectionReference;
 import com.google.cloud.firestore.DocumentReference;
-import com.google.cloud.firestore.DocumentSnapshot;
-import com.google.cloud.firestore.Query;
-import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.cloud.firestore.QuerySnapshot;
 import com.google.cloud.firestore.WriteResult;
 import com.google.firebase.cloud.FirestoreClient;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ExecutionException;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/eventos")
@@ -30,20 +29,17 @@ public class HelloController {
 
     @CrossOrigin(origins = "*")
     @PostMapping("/checkin")
-    public void confirmationEvent(@RequestBody Checkin checkin) throws ExecutionException, InterruptedException, Exception {
-//adiciona a pessoa na fila, soma nro de moedas dela
+    public void confirmationEvent(@RequestBody Checkin checkin) throws Exception {
         DocumentReference docRef = FirestoreClient.getFirestore().collection("eventos").document(checkin.getId());
 
-        Event event  = docRef.get().get().toObject(Event.class);
-        if(!event.addVolunteers(checkin.getEmail())){
+        Event event = docRef.get().get().toObject(Event.class);
+        if (!event.addVolunteers(checkin.getEmail())) {
             throw new Exception("Numero de chamadas assumidas");
-        }
-        else{
+        } else {
             docRef.set(event).get();
         }
 
     }
-
 
     @CrossOrigin(origins = "*")
     @PostMapping("/registerUser")
