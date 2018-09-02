@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Base64;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -29,7 +31,7 @@ public class HelloController {
 
     @CrossOrigin(origins = "*")
     @PostMapping("/checkin")
-    public void confirmationEvent(@RequestBody Checkin checkin) throws Exception {
+    public HashMap<String, String> confirmationEvent(@RequestBody Checkin checkin) throws Exception {
         DocumentReference docRef = FirestoreClient.getFirestore().collection("eventos").document(checkin.getId());
 
         Event event = docRef.get().get().toObject(Event.class);
@@ -37,8 +39,15 @@ public class HelloController {
             throw new Exception("Numero de chamadas assumidas");
         } else {
             docRef.set(event).get();
-        }
 
+            byte[] data =  (checkin.getEmail() + "_" + event.getMoedas()).getBytes();
+            String base64 = Base64.getEncoder().encodeToString(data);
+
+            HashMap<String, String> map = new HashMap<>();
+            map.put("token", base64);
+
+            return map;
+        }
     }
 
     @CrossOrigin(origins = "*")
