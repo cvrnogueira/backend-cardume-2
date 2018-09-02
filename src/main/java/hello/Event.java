@@ -1,21 +1,19 @@
 package hello;
-import com.google.gson.annotations.SerializedName;
-import org.codehaus.jackson.annotate.JacksonAnnotation;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 public class Event {
     private Date data_fim;
     private Date data_inicio;
     private String descricao;
-    private String dono;
-    private long duracao;
+    private String endereco;
     private String id;
     private int moedas;
     private String titulo;
     private int numero_voluntarios;
-    private List<String> voluntarios;
+    private List<String> voluntarios = new ArrayList<>();
 
     public Date getData_fim() {
         return data_fim;
@@ -41,20 +39,12 @@ public class Event {
         this.descricao = descricao;
     }
 
-    public String getDono() {
-        return dono;
+    public String getEndereco() {
+        return endereco;
     }
 
-    public void setDono(String dono) {
-        this.dono = dono;
-    }
-
-    public long getDuracao() {
-        return duracao;
-    }
-
-    public void setDuracao(long duracao) {
-        this.duracao = duracao;
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
     }
 
     public String getId() {
@@ -97,16 +87,16 @@ public class Event {
         this.voluntarios = voluntarios;
     }
 
-    public boolean addVolunteers(String volunteer) {
-        if(getVoluntarios() == null){
-            setVoluntarios(new ArrayList<>());
-        }
-        if(getVoluntarios().size() < getNumero_voluntarios()){
-            getVoluntarios().add(volunteer);
-            return true;
-        }
-        else{
-            return false;
-        }
+    public void addVolunteers(String volunteer) throws Exception {
+//        if (getVoluntarios() == null)
+//            setVoluntarios(new ArrayList<>());
+
+        if (getVoluntarios().contains(volunteer))
+            throw new Exception("Usuário já registrado no evento.");
+
+        if (getVoluntarios().size() >= getNumero_voluntarios())
+            throw new Exception("Número de chamadas assumidas.");
+
+        getVoluntarios().add(volunteer);
     }
 }
