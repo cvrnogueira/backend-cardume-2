@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 public class Event {
+
     private Date data_fim;
     private Date data_inicio;
     private String descricao;
@@ -13,6 +14,7 @@ public class Event {
     private int moedas;
     private String titulo;
     private String email;
+    private String telefone;
     private int numero_voluntarios;
     private List<String> voluntarios = new ArrayList<>();
 
@@ -86,6 +88,14 @@ public class Event {
 
     public void setNumero_voluntarios(int numero_voluntarios) {
         this.numero_voluntarios = numero_voluntarios;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
     }
 
     public List<String> getVoluntarios() {
