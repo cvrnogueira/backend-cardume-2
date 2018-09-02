@@ -81,7 +81,7 @@ public class HelloController {
         User mUser = docRef.get().get().toObject(User.class);
 
         if(mUser == null)
-            throw new Exception("Usuário já registrado no evento.");
+            throw new Exception("Usuário ou senha inválidos.");
         else {
             if(!mUser.getSenha().equalsIgnoreCase(user.getSenha()))
                 throw new Exception("Usuário ou senha inválidos.");
