@@ -5,9 +5,7 @@ import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Base64;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
 
 @RestController
@@ -22,11 +20,11 @@ public class HelloController {
     }
 
     @CrossOrigin(origins = "*")
-    @RequestMapping("/lista")
-    public List<Event> eventsOfUser(@RequestParam(value = "email") String email) throws ExecutionException, InterruptedException {
+    @GetMapping("/lista/{email}")
+    public List<Event> eventsOfUser(@PathVariable String email) throws ExecutionException, InterruptedException {
         CollectionReference collectionReference = FirestoreClient.getFirestore().collection("eventos");
 
-        Query query = collectionReference.whereEqualTo("email", email);
+        Query query = collectionReference.whereGreaterThanOrEqualTo("email", email);
 
         return query.get().get().toObjects(Event.class);
     }
@@ -104,4 +102,70 @@ public class HelloController {
         return docRef.document(event.getId()).set(event).get();
     }
 
+    @CrossOrigin(origins = "*")
+    @GetMapping("/adicionarPontos/{token}")
+    public void addPoints(@PathVariable String token) throws Exception {
+
+        byte[] data = Base64.getDecoder().decode(token);
+        String text = new String(data);
+
+        String[] content = text.split("_");
+
+        DocumentReference docRef = FirestoreClient.getFirestore().collection("pessoas").document(content[0]);
+        User user = docRef.get().get().toObject(User.class);
+
+        if(user == null)
+            throw new Exception("Usuário não existe na base!");
+
+        CheckinToEvent mCheckinToEvent = null;
+
+        for (CheckinToEvent checkinToEvent : user.getCheckin()) {
+            if(checkinToEvent.getToken().equals(token)) {
+                mCheckinToEvent = checkinToEvent;
+                break;
+            }
+        }
+
+        if(mCheckinToEvent == null)
+            throw new Exception("Token inválido.");
+
+        int total = user.getMoeda() + Integer.parseInt(content[1]);
+
+        user.setMoeda(total);
+
+        user.getCheckin().remove(mCheckinToEvent);
+
+        docRef.set(user).get();
+    }
+
+    @CrossOrigin(origins = "*")
+    @GetMapping("/premios")
+    public List<Reward> rewards() throws ExecutionException, InterruptedException {
+        ApiFuture<QuerySnapshot> docRef = FirestoreClient.getFirestore().collection("premios").get();
+        return docRef.get().toObjects(Reward.class);
+    }
+
+    @CrossOrigin(origins = "*")
+    @PostMapping("/trocar")
+    public Ticket exchange(@RequestBody Exchange exchange) throws Exception {
+        DocumentReference docRef = FirestoreClient.getFirestore().collection("premios").document(exchange.getRewardId());
+        Reward reward = docRef.get().get().toObject(Reward.class);
+
+        DocumentReference docRef2 = FirestoreClient.getFirestore().collection("pessoas").document(exchange.getUserId());
+        User user = docRef2.get().get().toObject(User.class);
+
+        if(reward == null || user == null)
+            throw new Exception("Não foi possível efetuar a troca.");
+
+        int points = user.getMoeda() - reward.getValor();
+
+        if(points < 0)
+            throw new Exception("Saldo insuficiente.");
+
+        user.setMoeda(points);
+
+        docRef2.set(user).get();
+
+        return Ticket.builder(user, reward);
+    }
 }
