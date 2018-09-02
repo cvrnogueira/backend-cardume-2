@@ -65,10 +65,18 @@ public class HelloController {
     public int getPointNumber(@RequestParam String userId) throws ExecutionException, InterruptedException {
         DocumentReference docRef = FirestoreClient.getFirestore().collection("pessoas").document(userId);
         return docRef.get().get().toObject(User.class).getMoeda();
-
     }
 
+    @CrossOrigin(origins = "*")
+    @PostMapping("/novoEvento")
+    public WriteResult addEvent(@RequestBody Event event) throws ExecutionException, InterruptedException {
+        CollectionReference docRef = FirestoreClient.getFirestore().collection("eventos");
 
+        int newId = docRef.get().get().getDocuments().size() + 1;
 
+        event.setId(String.valueOf(newId));
+
+        return docRef.document(event.getId()).set(event).get();
+    }
 
 }
