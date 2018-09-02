@@ -62,9 +62,6 @@ public class User {
     }
 
     public void addCheckInToEventos(Date data_fim, Date data_inicio, String endereco, String id, String titulo, String token) {
-//        if (getCheckin() == null)
-//            setCheckin(new ArrayList<>());
-
         getCheckin().add(new CheckinToEvent(data_fim, data_inicio, endereco, id, titulo, token));
     }
 }

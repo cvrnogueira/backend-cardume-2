@@ -12,6 +12,7 @@ public class Event {
     private String id;
     private int moedas;
     private String titulo;
+    private String email;
     private int numero_voluntarios;
     private List<String> voluntarios = new ArrayList<>();
 
@@ -45,6 +46,14 @@ public class Event {
 
     public void setEndereco(String endereco) {
         this.endereco = endereco;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getId() {
@@ -88,9 +97,6 @@ public class Event {
     }
 
     public void addVolunteers(String volunteer) throws Exception {
-//        if (getVoluntarios() == null)
-//            setVoluntarios(new ArrayList<>());
-
         if (getVoluntarios().contains(volunteer))
             throw new Exception("Usuário já registrado no evento.");
 

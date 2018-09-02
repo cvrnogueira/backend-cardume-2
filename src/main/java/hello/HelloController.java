@@ -1,19 +1,9 @@
 package hello;
 
 import com.google.api.core.ApiFuture;
-import com.google.cloud.firestore.CollectionReference;
-import com.google.cloud.firestore.DocumentReference;
-import com.google.cloud.firestore.DocumentSnapshot;
-import com.google.cloud.firestore.QuerySnapshot;
-import com.google.cloud.firestore.WriteResult;
+import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Base64;
 import java.util.HashMap;
@@ -29,6 +19,16 @@ public class HelloController {
     public List<Event> listOfEvents() throws ExecutionException, InterruptedException {
         ApiFuture<QuerySnapshot> docRef = FirestoreClient.getFirestore().collection("eventos").get();
         return docRef.get().toObjects(Event.class);
+    }
+
+    @CrossOrigin(origins = "*")
+    @RequestMapping("/lista")
+    public List<Event> eventsOfUser(@RequestParam(value = "email") String email) throws ExecutionException, InterruptedException {
+        CollectionReference collectionReference = FirestoreClient.getFirestore().collection("eventos");
+
+        Query query = collectionReference.whereEqualTo("email", email);
+
+        return query.get().get().toObjects(Event.class);
     }
 
     @CrossOrigin(origins = "*")
