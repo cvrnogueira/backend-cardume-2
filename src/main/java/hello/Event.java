@@ -1,86 +1,112 @@
 package hello;
 import com.google.gson.annotations.SerializedName;
+import org.codehaus.jackson.annotate.JacksonAnnotation;
+
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 public class Event {
-    @SerializedName("data_fim")
-    private Date endDate;
-    @SerializedName("data_inicio")
-    private Date startDate;
-    @SerializedName("descricao")
-    private String description;
-    @SerializedName("dono")
-    private String owner;
-    @SerializedName("duracao")
-    private long duration;
-    @SerializedName("id")
-    private int id;
-    @SerializedName("moedas")
-    private int points;
-    @SerializedName("titulo")
-    private String title;
-    @SerializedName("numero_voluntarios")
-    private int n_volunteers;
-    @SerializedName("voluntarios")
-    private List<String> volunteers;
-    public Date getEndDate() {
-        return endDate;
+    private Date data_fim;
+    private Date data_inicio;
+    private String descricao;
+    private String dono;
+    private long duracao;
+    private String id;
+    private int moedas;
+    private String titulo;
+    private int numero_voluntarios;
+    private List<String> voluntarios;
+
+    public Date getData_fim() {
+        return data_fim;
     }
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
+
+    public void setData_fim(Date data_fim) {
+        this.data_fim = data_fim;
     }
-    public Date getStartDate() {
-        return startDate;
+
+    public Date getData_inicio() {
+        return data_inicio;
     }
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
+
+    public void setData_inicio(Date data_inicio) {
+        this.data_inicio = data_inicio;
     }
-    public String getDescription() {
-        return description;
+
+    public String getDescricao() {
+        return descricao;
     }
-    public void setDescription(String description) {
-        this.description = description;
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
-    public String getOwner() {
-        return owner;
+
+    public String getDono() {
+        return dono;
     }
-    public void setOwner(String owner) {
-        this.owner = owner;
+
+    public void setDono(String dono) {
+        this.dono = dono;
     }
-    public long getDuration() {
-        return duration;
+
+    public long getDuracao() {
+        return duracao;
     }
-    public void setDuration(long duration) {
-        this.duration = duration;
+
+    public void setDuracao(long duracao) {
+        this.duracao = duracao;
     }
-    public int getId() {
+
+    public String getId() {
         return id;
     }
-    public void setId(int id) {
+
+    public void setId(String id) {
         this.id = id;
     }
-    public int getPoints() {
-        return points;
+
+    public int getMoedas() {
+        return moedas;
     }
-    public void setPoints(int points) {
-        this.points = points;
+
+    public void setMoedas(int moedas) {
+        this.moedas = moedas;
     }
-    public String getTitle() {
-        return title;
+
+    public String getTitulo() {
+        return titulo;
     }
-    public void setTitle(String title) {
-        this.title = title;
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
     }
-    public int getN_volunteers() {
-        return n_volunteers;
+
+    public int getNumero_voluntarios() {
+        return numero_voluntarios;
     }
-    public void setN_volunteers(int n_volunteers) {
-        this.n_volunteers = n_volunteers;
+
+    public void setNumero_voluntarios(int numero_voluntarios) {
+        this.numero_voluntarios = numero_voluntarios;
     }
-    public List<String> getVolunteers() {
-        return volunteers;
+
+    public List<String> getVoluntarios() {
+        return voluntarios;
     }
-    public void setVolunteers(List<String> volunteers) {
-        this.volunteers = volunteers;
+
+    public void setVoluntarios(List<String> voluntarios) {
+        this.voluntarios = voluntarios;
+    }
+
+    public boolean addVolunteers(String volunteer) {
+        if(getVoluntarios() == null){
+            setVoluntarios(new ArrayList<>());
+        }
+        if(getVoluntarios().size() < getNumero_voluntarios()){
+            getVoluntarios().add(volunteer);
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 }

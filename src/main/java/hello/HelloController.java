@@ -4,6 +4,7 @@ import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.CollectionReference;
 import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.DocumentSnapshot;
+import com.google.cloud.firestore.Query;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.cloud.firestore.QuerySnapshot;
 import com.google.cloud.firestore.WriteResult;
@@ -29,16 +30,18 @@ public class HelloController {
 
     @CrossOrigin(origins = "*")
     @PostMapping("/checkin")
-    public Map<String, Object> confirmationEvent(@RequestAttribute("id") String id, @RequestAttribute("email") String email) throws ExecutionException, InterruptedException {
+    public void confirmationEvent(@RequestBody Checkin checkin) throws ExecutionException, InterruptedException, Exception {
 //adiciona a pessoa na fila, soma nro de moedas dela
-        CollectionReference docRef = FirestoreClient.getFirestore().collection("eventos");
+        DocumentReference docRef = FirestoreClient.getFirestore().collection("eventos").document(checkin.getId());
 
-        docRef.document(id).set().get();
-        ApiFuture<DocumentSnapshot> future = docRef.get();
+        Event event  = docRef.get().get().toObject(Event.class);
+        if(!event.addVolunteers(checkin.getEmail())){
+            throw new Exception("Numero de chamadas assumidas");
+        }
+        else{
+            docRef.set(event).get();
+        }
 
-        DocumentSnapshot document = future.get();
-
-        return document.getData();
     }
 
 
