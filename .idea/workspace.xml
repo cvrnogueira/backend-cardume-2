@@ -2,14 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e146effb-7495-4b33-beee-d6e2abb333e3" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/java/hello/CheckinToEvent.java" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/out/production/classes/hello/Event.class" afterPath="$PROJECT_DIR$/out/production/classes/hello/Event.class" />
       <change beforePath="$PROJECT_DIR$/out/production/classes/hello/HelloController.class" afterPath="" />
       <change beforePath="$PROJECT_DIR$/out/production/classes/hello/User.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hello/Event.java" afterPath="$PROJECT_DIR$/src/main/java/hello/Event.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hello/HelloController.java" afterPath="$PROJECT_DIR$/src/main/java/hello/HelloController.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hello/User.java" afterPath="$PROJECT_DIR$/src/main/java/hello/User.java" />
     </list>
     <ignored path="$PROJECT_DIR$/.gradle/" />
     <ignored path="$PROJECT_DIR$/build/" />
@@ -756,7 +752,7 @@
       <updated>1535840716161</updated>
       <workItem from="1535840717387" duration="860000" />
       <workItem from="1535843173741" duration="10749000" />
-      <workItem from="1535860205443" duration="6256000" />
+      <workItem from="1535860205443" duration="6301000" />
     </task>
     <task id="LOCAL-00001" summary="integration with firebase.">
       <created>1535841120192</created>
@@ -779,11 +775,18 @@
       <option name="project" value="LOCAL" />
       <updated>1535866309355</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="added list checkin to event into user.">
+      <created>1535870751342</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1535870751342</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="17865000" />
+    <option name="totallyTimeSpent" value="17910000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -884,7 +887,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="integration with firebase." />
     <MESSAGE value="add new event." />
-    <option name="LAST_COMMIT_MESSAGE" value="add new event." />
+    <MESSAGE value="added list checkin to event into user." />
+    <option name="LAST_COMMIT_MESSAGE" value="added list checkin to event into user." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
