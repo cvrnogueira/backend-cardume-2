@@ -1,0 +1,21 @@
+[debug] [2018-09-02T01:11:49.001Z] ----------------------------------------------------------------------
+[debug] [2018-09-02T01:11:49.003Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\catarina_nogueira\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase serve
+[debug] [2018-09-02T01:11:49.003Z] CLI Version:   4.2.1
+[debug] [2018-09-02T01:11:49.004Z] Platform:      win32
+[debug] [2018-09-02T01:11:49.004Z] Node Version:  v8.11.4
+[debug] [2018-09-02T01:11:49.005Z] Time:          Sat Sep 01 2018 22:11:49 GMT-0300 (Hora oficial do Brasil)
+[debug] [2018-09-02T01:11:49.005Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-09-02T01:11:49.030Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-09-02T01:11:49.031Z] > authorizing via signed-in user
+[debug] [2018-09-02T01:11:49.034Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/cardume-2018  
+ 
+[debug] [2018-09-02T01:11:50.006Z] <<< HTTP RESPONSE 200
+[debug] [2018-09-02T01:11:50.010Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/cardume-2018  
+ 
+[debug] [2018-09-02T01:12:11.599Z] Error: connect ETIMEDOUT 172.217.30.74:443
+    at Object._errnoException (util.js:992:11)
+    at _exceptionWithHostPort (util.js:1014:20)
+    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1186:14)
+[error] 
+[error] Error: Server Error. connect ETIMEDOUT 172.217.30.74:443
