@@ -30,6 +30,13 @@ public class HelloController {
     }
 
     @CrossOrigin(origins = "*")
+    @GetMapping("/user/{email}")
+    public User user(@PathVariable String email) throws ExecutionException, InterruptedException {
+        DocumentReference docRef = FirestoreClient.getFirestore().collection("pessoas").document(email);
+        return docRef.get().get().toObject(User.class);
+    }
+
+    @CrossOrigin(origins = "*")
     @PostMapping("/checkin")
     public void confirmationEvent(@RequestBody Checkin checkin) throws Exception {
         DocumentReference docRef = FirestoreClient.getFirestore().collection("eventos").document(checkin.getId());
